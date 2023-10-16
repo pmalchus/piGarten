@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <link rel='stylesheet' type='text/css' href='Garten.css'/>
+  <script src="jquery-1.9.1.min.js" type="text/javascript"></script>
+  <script src="functions.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+
+      $(document).ready(function(){
+        console.log("started")
+        get_initial_values()
+      });
+
+      function GetTimeValues(){
+          var values = {
+            "Mode" : "set_values",
+            "TimeValues" : {
+              "Setting_1_An": document.getElementsByName("Setting_1_An")[0].value,
+              "Setting_1_Aus": document.getElementsByName("Setting_1_Aus")[0].value,
+              "Setting_2_An": document.getElementsByName("Setting_2_An")[0].value,
+              "Setting_2_Aus":document.getElementsByName("Setting_2_Aus")[0].value,
+              "randomtime":document.getElementsByName("randomtime")[0].value,
+
+            }
+          }
+          send(values)
+      }
+
+
+      function GetRadioValues(name){
+        var radios =  document.getElementsByName(name)
+         for (var i=0, len=radios.length; i<len; i++) {
+                if ( radios[i].checked ) { // radio checked?
+                  val = radios[i].value; // if so, hold its value in val
+                  var values = {
+                    "Mode" : "SwitchIO",
+                    "Channel" : name,
+                    "Value" : val
+                  }
+
+                    send(values)
+                    break; // and break out of for loop
+                }
+            }
+        }
+
+
+  </script>
+  <title>Lichtsteuerung Gartenhäuschen</title>
+</head>
+<body>
+
+  <form>
+    <p>Zeitplan:</p>
+    <fieldset onclick="GetTimeValues();">
+      <p>Setting 1:</p>
+      <input type="time" id="Setting_1_An" name="Setting_1_An" value="06:00">
+      <label for="Setting_1_An">An</label>
+      <input type="time" id="Setting_1_Aus" name="Setting_1_Aus" value="08:00">
+      <label for="Setting_1_Aus">Aus</label>
+      <p>Setting 2:</p>
+      <input type="time" id="Setting_2_An" name="Setting_2_An" value="16:30">
+      <label for="Setting_2_An">An</label>
+      <input type="time" id="Setting_2_Aus" name="Setting_2_Aus" value="20:00">
+      <label for="Setting_2_Aus">Aus</label>
+       <p>Zufalls-Wechsel-Zeit:</p>
+      <input type="input" id="randomtime" name="randomtime" value="5">
+
+    </fieldset>
+
+
+
+    <p>Veranda:</p>
+    <fieldset onclick="GetRadioValues('Veranda');">
+      <input type="radio" id="Veranda_An" name="Veranda" value="An">
+      <label for="Veranda_An"> An</label>
+      <input type="radio" id="Veranda_Zeitschaltuhr" name="Veranda" value="Zeitschaltuhr">
+      <label for="Veranda_Zeitschaltuhr"> Zeitschaltuhr</label>
+      <input type="radio" id="Veranda_Zeitschaltuhr_random" name="Veranda" value="Zeitschaltuhr_Zufall">
+      <label for="Veranda_Zeitschaltuhr">Zeitschaltuhr Zufall</label>
+      <input type="radio" id="Veranda_Aus" name="Veranda" value="Aus">
+      <label for="Veranda_Aus"> Aus</label>
+    </fieldset>
+    <p>Vordach:</p>
+    <fieldset onclick="GetRadioValues('Vordach');">
+      <input type="radio" id="Vordach_An" name="Vordach" value="An">
+      <label for="Vordach_An"> An</label>
+      <input type="radio" id="Vordach_Zeitschaltuhr" name="Vordach" value="Zeitschaltuhr">
+      <label for="Vordach_Zeitschaltuhr"> Zeitschaltuhr</label>
+      <input type="radio" id="Vordach_Zeitschaltuhr_random" name="Vordach" value="Zeitschaltuhr_Zufall">
+      <label for="Vordach_Zeitschaltuhr">Zeitschaltuhr Zufall</label>
+      <input type="radio" id="Vordach_Aus" name="Vordach" value="Aus">
+      <label for="Vordach_Aus"> Aus</label>
+    </fieldset>
+    <p>Licht oben:</p>
+    <fieldset onclick="GetRadioValues('LichtOben');">
+      <input type="radio" id="LichtOben_An" name="LichtOben" value="An">
+      <label for="LichtOben_An"> An</label>
+      <input type="radio" id="LichtOben_Zeitschaltuhr" name="LichtOben" value="Zeitschaltuhr">
+      <label for="LichtOben_Zeitschaltuhr"> Zeitschaltuhr</label>
+      <input type="radio" id="LichtOben_Zeitschaltuhr_random" name="LichtOben" value="Zeitschaltuhr_Zufall">
+      <label for="LichtOben_Zeitschaltuhr">Zeitschaltuhr Zufall</label>
+      <input type="radio" id="LichtOben_Aus" name="LichtOben" value="Aus">
+      <label for="LichtOben_Aus"> Aus</label>
+    </fieldset>
+    <p>Licht unten:</p>
+    <fieldset onclick="GetRadioValues('LichtUnten');">
+      <input type="radio" id="LichtUnten_An" name="LichtUnten" value="An">
+      <label for="LichtUnten_An"> An</label>
+      <input type="radio" id="LichtUnten_Zeitschaltuhr" name="LichtUnten" value="Zeitschaltuhr">
+      <label for="LichtUnten_Zeitschaltuhr"> Zeitschaltuhr</label>
+      <input type="radio" id="LichtUnten_Zeitschaltuhr_random" name="LichtUnten" value="Zeitschaltuhr_Zufall">
+      <label for="LichtUnten_Zeitschaltuhr">Zeitschaltuhr Zufall</label>
+      <input type="radio" id="LichtUnten_Aus" name="LichtUnten" value="Aus">
+      <label for="LichtUnten_Aus"> Aus</label>
+    </fieldset>
+    <p>Steckdosen:</p>
+    <fieldset onclick="GetRadioValues('Steckdosen');">
+      <input type="radio" id="Steckdosen_An" name="Steckdosen" value="An">
+      <label for="Steckdosen_An"> An</label>
+      <input type="radio" id="Steckdosen_Zeitschaltuhr" name="Steckdosen" value="Zeitschaltuhr">
+      <label for="Steckdosen_Zeitschaltuhr"> Zeitschaltuhr</label>
+      <input type="radio" id="Steckdosen_Zeitschaltuhr_random" name="Steckdosen_Zeitschaltuhr" value="Steckdosen_Zeitschaltuhr_Zufall">
+      <label for="Steckdosen_Zeitschaltuhr_random">Zeitschaltuhr Zufall</label>
+      <input type="radio" id="Steckdosen_Aus" name="Steckdosen" value="Aus">
+      <label for="Steckdosen_Aus"> Aus</label>
+    </fieldset>
+
+
+
+
+
+
+  </form>
+
+</body>
+</html>
