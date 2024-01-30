@@ -45,20 +45,6 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             jsontest = json.dumps(inital_data)
             self.wfile.write((jsontest).encode('utf-8'))
 
-        if response["Mode"] == "set_values":
-
-            times = response["TimeValues"]
-            print(times)
-            self.datastorage.data["Time_Settings"]["setting_1"]["on"] = times["Setting_1_An"]
-            self.datastorage.data["Time_Settings"]["setting_1"]["off"] = times["Setting_1_Aus"]
-            self.datastorage.data["Time_Settings"]["setting_2"]["on"] = times["Setting_2_An"]
-            self.datastorage.data["Time_Settings"]["setting_2"]["off"] = times["Setting_2_Aus"]
-            self.datastorage.data["randomtime"] = times["randomtime"]
-            self.datastorage.set_default_values()
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
 
         if response["Mode"] == "SwitchIO":
             self.digitalOut.ligth_groups[response["Channel"]]["Mode"] = response["Value"]
@@ -96,7 +82,7 @@ class WebServer:
         # handler_object = MyHttpRequestHandler
 
         PORT = 8080
-        my_server = socketserver.TCPServer(("192.168.0.92", PORT), handler_object)
+        my_server = socketserver.TCPServer(("piGarten", PORT), handler_object)
         my_server.digitalIO = self.digitalOut
 
         # Star the server

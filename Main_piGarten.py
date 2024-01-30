@@ -4,24 +4,27 @@ import time
 import json
 from Webserver import WebServer
 from DigitalOut import DigitalIO
+from Data import DataStorage
+from Keller_Bridge import KellerBridge
+from Logger import Logwriter
 
 
 def main():
-    print("started")
 
 
-    digitalOut = DigitalIO()
+    logger = Logwriter()
+    logger.log_print("started")
+
+    data = DataStorage()
+    digitalOut = DigitalIO(data)
     digitalOut.start()
-
-    webserver = WebServer(digitalOut)
-    webserver.open_webserver()
+    gartenbridge = KellerBridge(data)
+    gartenbridge.connect()
 
     shutdown_event = False
 
-    print("Webserver started")
-
     while not shutdown_event:
-        time.sleep(0.001)
+        time.sleep(0.1)
 
 
 
